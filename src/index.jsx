@@ -2,6 +2,8 @@ import PhotoSwipe from 'photoswipe/dist/photoswipe'
 import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default'
 import 'photoswipe/dist/default-skin/default-skin.css'
 import 'photoswipe/dist/photoswipe.css'
+import ReactDOM from 'react-dom'
+import React from 'react'
 
 var pswpElement = document.querySelectorAll('.pswp')[0];
 
@@ -41,10 +43,10 @@ fetch('http://localhost:5000/get-current-dir-image-names-recursively')
 
         const gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, images, options);
 
-        gallery.listen('gettingData', function(index, item) {
+        gallery.listen('gettingData', function (index, item) {
             if (item.w < 1 || item.h < 1) { // unknown size
                 const img = new Image();
-                img.onload = function() { // will get size after load
+                img.onload = function () { // will get size after load
                     item.w = this.width; // set image width
                     item.h = this.height; // set image height
                     gallery.updateSize(true);
@@ -57,7 +59,10 @@ fetch('http://localhost:5000/get-current-dir-image-names-recursively')
         gallery.init();
     });
 
-
+ReactDOM.render(
+    <h1>Hello, world!</h1>,
+    document.getElementById('root')
+);
 
 
 
