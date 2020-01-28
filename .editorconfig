@@ -1,0 +1,6 @@
+root = true
+
+[*]
+ij_continuation_indent_size = 2
+indent_size = 2
+ij_javascript_enforce_trailing_comma = whenmultiline
