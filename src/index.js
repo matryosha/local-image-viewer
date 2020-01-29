@@ -14,6 +14,6 @@ const services = {
 };
 
 ReactDOM.render(
-  <App services={services} />,
+  React.createElement(App, { services }, null),
   document.getElementById('root'),
 );
