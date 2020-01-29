@@ -4,6 +4,9 @@ import 'photoswipe/dist/default-skin/default-skin.css';
 import 'photoswipe/dist/photoswipe.css';
 import ReactDOM from 'react-dom';
 import React from 'react';
+import './Components/Styles/normizile.css';
+
+import App from './App';
 
 const pswpElement = document.querySelectorAll('.pswp')[0];
 
@@ -59,6 +62,6 @@ fetch('http://localhost:5000/get-current-dir-image-names-recursively')
   });
 
 ReactDOM.render(
-  <h1>Hello, world!</h1>,
+  <App />,
   document.getElementById('root'),
 );
