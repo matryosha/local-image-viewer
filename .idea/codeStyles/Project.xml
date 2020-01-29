@@ -1,7 +1,13 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
+    <HTMLCodeStyleSettings>
+      <option name="HTML_SPACE_INSIDE_EMPTY_TAG" value="true" />
+    </HTMLCodeStyleSettings>
     <JSCodeStyleSettings version="0">
       <option name="FORCE_SEMICOLON_STYLE" value="true" />
     </JSCodeStyleSettings>
+    <XML>
+      <option name="XML_SPACE_INSIDE_EMPTY_TAG" value="true" />
+    </XML>
   </code_scheme>
 </component>
