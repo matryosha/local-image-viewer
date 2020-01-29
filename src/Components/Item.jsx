@@ -3,7 +3,7 @@ import './Styles/item.sass';
 
 
 export default function Item(props) {
-  const { children, onClick, isFile } = props;
+  const { onClick, isFile, name } = props;
   const fileSvg = (
     <svg width="45" height="41" viewBox="0 0 34 41" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -28,10 +28,10 @@ export default function Item(props) {
   return (
     <div className={boxClassName} onClick={onClick}>
       <div className="item-file-type-box">
-        {fileSvg}
+        {fileTypeIcon}
       </div>
       <div className="item-name">
-        <p>Some Item Name</p>
+        <p>{name}</p>
       </div>
     </div>
   );
