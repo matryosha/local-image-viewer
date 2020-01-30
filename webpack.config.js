@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: './src/index.js',
   output: {
+    publicPath: '/',
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
@@ -64,6 +65,7 @@ module.exports = {
     port: 9000,
     useLocalIp: true,
     host: '0.0.0.0',
+    historyApiFallback: true,
   },
   devtool: 'cheap-module-source-map',
 };
