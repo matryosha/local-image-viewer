@@ -48,6 +48,18 @@ export default class App extends React.Component {
       { currentDir: updatedCurrentDir, items: newItems.items.sort(compareItems) }));
   }
 
+  async handleFolderUpClicked() {
+    console.log('folder up clicked');
+    const { currentDir } = this.state;
+
+    const updatedCurrentDir = CurrentDirTransform.dirUp(currentDir);
+    if (currentDir === updatedCurrentDir) return;
+    const newItems = await this.apiService.fetchDirItems(updatedCurrentDir);
+
+    this.setState(() => (
+      { currentDir: updatedCurrentDir, items: newItems.items.sort(compareItems) }));
+  }
+
   render() {
     const { items } = this.state;
     const itemsToRender = items.map((item, index) => (
@@ -63,7 +75,7 @@ export default class App extends React.Component {
     return (
       <>
         <div id="control-buttons">
-          <FolderUpButton />
+          <FolderUpButton onClick={async () => this.handleFolderUpClicked()} />
           <RootButton />
         </div>
         <div id="items">
