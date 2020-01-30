@@ -6,10 +6,9 @@ export const getDirItemsEndPoint = (relDirPath) => `${serverApiEndpoint}/get-dir
 
 export default () => ({
   async fetchDirItems(relDirPath) {
-    const dirPath = relDirPath === '/' ? '' : relDirPath;
     let result;
     try {
-      const fetchResult = await Axios.get(getDirItemsEndPoint(dirPath));
+      const fetchResult = await Axios.get(getDirItemsEndPoint(relDirPath));
       result = {
         ok: true,
         items: fetchResult.data,
