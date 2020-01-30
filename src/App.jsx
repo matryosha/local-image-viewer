@@ -9,22 +9,43 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     const { services } = this.props;
-    const { apiService } = services;
+    const { apiService, galleryService } = services;
     this.apiService = apiService;
+    this.galleryService = galleryService;
 
-    this.state = { items: [] };
+    this.state = { items: [], currentDir: '' };
   }
 
   async componentDidMount() {
-    const fetchResult = await this.apiService.fetchCurrentDirItems();
+    const { currentDir } = this.state;
+    const fetchResult = await this.apiService.fetchDirItems(currentDir);
     this.setState(() => ({ items: fetchResult.items.sort(compareItems) }));
+  }
+
+  async itemClicked(itemName, isFile) {
+    if (isFile) return this.handleFileClicked(itemName);
+  }
+
+  async handleFileClicked(itemName) {
+    const { items, currentDir } = this.state;
+    const currentDirFilesOnly = items.filter((i) => i.isFile);
+    const getImageEndpoint = this.apiService.getImageEndpoint();
+    const filesWithRelativeUrl = currentDirFilesOnly.map((f) => `${getImageEndpoint}${currentDir}${f.name}`);
+
+    this.galleryService.open(filesWithRelativeUrl.map((f) => ({ src: f, w: -1, h: -1 })));
   }
 
   render() {
     const { items } = this.state;
     const itemsToRender = items.map((item, index) => (
-      // eslint-disable-next-line react/no-array-index-key
-      <Item isFile={item.isFile} name={item.name} key={index} />));
+      <Item
+        isFile={item.isFile}
+        name={item.name}
+        // eslint-disable-next-line react/no-array-index-key
+        key={index}
+        onClick={async (itemName, isFile) => this.itemClicked(itemName, isFile)}
+      />
+    ));
 
     return (
       <>
