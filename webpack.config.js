@@ -65,5 +65,5 @@ module.exports = {
     useLocalIp: true,
     host: '0.0.0.0',
   },
-
+  devtool: 'cheap-module-source-map',
 };
