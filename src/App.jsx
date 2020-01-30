@@ -28,9 +28,10 @@ export default class App extends React.Component {
 
   async handleFileClicked(itemName) {
     const { items, currentDir } = this.state;
+    const { getImageEndpoint } = this.apiService;
+
     const currentDirFilesOnly = items.filter((i) => i.isFile);
-    const getImageEndpoint = this.apiService.getImageEndpoint();
-    const filesWithRelativeUrl = currentDirFilesOnly.map((f) => `${getImageEndpoint}${currentDir}${f.name}`);
+    const filesWithRelativeUrl = currentDirFilesOnly.map((f) => `${getImageEndpoint}/${currentDir}${f.name}`);
 
     this.galleryService.open(filesWithRelativeUrl.map((f) => ({ src: f, w: -1, h: -1 })));
   }
