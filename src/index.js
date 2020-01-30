@@ -5,7 +5,7 @@ import GalleryService from './Services/galleryService';
 import ApiService from './Services/api';
 import App from './App';
 
-const apiService = ApiService();
+const apiService = ApiService;
 const galleryService = GalleryService();
 
 const services = {
