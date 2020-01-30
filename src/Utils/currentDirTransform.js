@@ -9,9 +9,9 @@ function dirUp(currentDirString) {
   if (currentDirString === '') return currentDirString;
 
   const lastSlashIndex = currentDirString.lastIndexOf('/');
-  if (lastSlashIndex === -1) return currentDirString;
+  if (lastSlashIndex === -1) return '';
 
-  return currentDirString.slice(0, lastSlashIndex - 1);
+  return currentDirString.slice(0, lastSlashIndex);
 }
 
 export {
