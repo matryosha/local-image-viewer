@@ -3,7 +3,7 @@ import FolderUpButton from './Components/FolderUpButton';
 import RootButton from './Components/RootButton';
 import Item from './Components/Item';
 import './Components/Styles/main.sass';
-import compareItems from './Utils/common';
+import { compareItems, createGalleryItemList } from './Utils/common';
 import * as CurrentDirTransform from './Utils/currentDirTransform';
 
 export default class App extends React.Component {
@@ -30,12 +30,8 @@ export default class App extends React.Component {
 
   async handleFileClicked(itemName) {
     const { items, currentDir } = this.state;
-    const { getImageEndpoint } = this.apiService;
-
-    const currentDirFilesOnly = items.filter((i) => i.isFile);
-    const filesWithRelativeUrl = currentDirFilesOnly.map((f) => `${getImageEndpoint}/${currentDir}${f.name}`);
-
-    this.galleryService.open(filesWithRelativeUrl.map((f) => ({ src: f, w: -1, h: -1 })));
+    const galleryItems = createGalleryItemList(currentDir, items, this.apiService);
+    this.galleryService.open(galleryItems);
   }
 
   async handleFolderClicked(folderName) {
@@ -49,7 +45,6 @@ export default class App extends React.Component {
   }
 
   async handleFolderUpClicked() {
-    console.log('folder up clicked');
     const { currentDir } = this.state;
 
     const updatedCurrentDir = CurrentDirTransform.dirUp(currentDir);
