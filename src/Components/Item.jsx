@@ -26,7 +26,7 @@ export default function Item(props) {
   const boxClassName = `item ${isFile ? 'item-file-bg' : 'item-folder-bg'}`;
 
   return (
-    <div className={boxClassName} onClick={onClick}>
+    <div className={boxClassName} onClick={async () => onClick(name, isFile)}>
       <div className="item-file-type-box">
         {fileTypeIcon}
       </div>
