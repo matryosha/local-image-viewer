@@ -4,6 +4,7 @@ import RootButton from './Components/RootButton';
 import Item from './Components/Item';
 import './Components/Styles/main.sass';
 import compareItems from './Utils/common';
+import * as CurrentDirTransform from './Utils/currentDirTransform';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export default class App extends React.Component {
 
   async itemClicked(itemName, isFile) {
     if (isFile) return this.handleFileClicked(itemName);
+    return this.handleFolderClicked(itemName);
   }
 
   async handleFileClicked(itemName) {
@@ -34,6 +36,16 @@ export default class App extends React.Component {
     const filesWithRelativeUrl = currentDirFilesOnly.map((f) => `${getImageEndpoint}/${currentDir}${f.name}`);
 
     this.galleryService.open(filesWithRelativeUrl.map((f) => ({ src: f, w: -1, h: -1 })));
+  }
+
+  async handleFolderClicked(folderName) {
+    const { currentDir } = this.state;
+
+    const updatedCurrentDir = CurrentDirTransform.openDir(currentDir, folderName);
+    const newItems = await this.apiService.fetchDirItems(updatedCurrentDir);
+
+    this.setState(() => (
+      { currentDir: updatedCurrentDir, items: newItems.items.sort(compareItems) }));
   }
 
   render() {
