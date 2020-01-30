@@ -1,16 +1,16 @@
-import 'photoswipe/dist/default-skin/default-skin.css';
-import 'photoswipe/dist/photoswipe.css';
+import './Components/Styles/normizile.css';
 import ReactDOM from 'react-dom';
 import React from 'react';
-import './Components/Styles/normizile.css';
-import * as MockApi from './Services/api.mock';
-
+import GalleryService from './Services/galleryService';
+import ApiService from './Services/api';
 import App from './App';
 
-const apiService = MockApi.successfulApi();
+const apiService = ApiService();
+const galleryService = GalleryService();
 
 const services = {
   apiService,
+  galleryService,
 };
 
 ReactDOM.render(
