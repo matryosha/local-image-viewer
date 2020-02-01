@@ -17,7 +17,7 @@ export default class App extends React.Component {
 
     this.router.init();
     this.router.subscribeToHistoryChanges(this.handleHistoryChange.bind(this));
-    this.state = { items: [], currentDir: '' };
+    this.state = { items: [], currentDir: this.router.getCurrentDirPath() };
   }
 
   async componentDidMount() {
