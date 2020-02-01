@@ -22,6 +22,9 @@ class FsImages:
         if not os.path.isdir(self.base_path):
             raise FileNotFoundError('Start path does not exist or not a directory')
 
+    def get_image_full_path(self, image_relative_path):
+        return os.path.join(self.base_path, image_relative_path)
+
     def get_dir_content(self, rel_dir_path):
         """
         :param rel_dir_path: Relative directory path to base path
