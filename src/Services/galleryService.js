@@ -1,8 +1,7 @@
-/* eslint-disable no-param-reassign  */
+/* eslint-disable no-param-reassign,func-names,camelcase */
 import 'photoswipe/dist/default-skin/default-skin.css';
 import 'photoswipe/dist/photoswipe.css';
 import PhotoSwipe from 'photoswipe/dist/photoswipe';
-// eslint-disable-next-line camelcase
 import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default';
 
 export default () => ({
