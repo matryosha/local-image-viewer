@@ -1,3 +1,5 @@
+import { pathNameToCurrentDirString } from '../Utils/currentDirTransform';
+
 export default {
   handlers: [],
   init() {
@@ -24,5 +26,8 @@ export default {
       '',
       path === '' ? '/' : `/../${path}`,
     );
+  },
+  getCurrentDirPath() {
+    return pathNameToCurrentDirString(window.location.pathname);
   },
 };
