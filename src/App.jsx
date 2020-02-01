@@ -10,16 +10,19 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     const { services } = this.props;
-    const { apiService, galleryService } = services;
+    const { apiService, galleryService, routerService } = services;
     this.apiService = apiService;
     this.galleryService = galleryService;
+    this.router = routerService;
+
+    this.router.init();
+    this.router.subscribeToHistoryChanges(this.handleHistoryChange.bind(this));
     this.state = { items: [], currentDir: '' };
   }
 
   async componentDidMount() {
     const { currentDir } = this.state;
     const fetchResult = await this.apiService.fetchDirItems(currentDir);
-    window.onpopstate = (e) => this.handleHistoryChange(e);
     this.setState(() => ({ items: fetchResult.items.sort(compareItems) }));
   }
 
@@ -38,7 +41,7 @@ export default class App extends React.Component {
     const { currentDir } = this.state;
 
     const updatedCurrentDir = CurrentDirTransform.openDir(currentDir, folderName);
-    window.history.pushState({ currentDir: updatedCurrentDir }, folderName, `/${updatedCurrentDir}`);
+    this.router.goTo(updatedCurrentDir);
     const newItems = await this.apiService.fetchDirItems(updatedCurrentDir);
 
     this.setState(() => (
@@ -50,20 +53,13 @@ export default class App extends React.Component {
     const updatedCurrentDir = CurrentDirTransform.dirUp(currentDir);
     if (currentDir === updatedCurrentDir) return;
     const newItems = await this.apiService.fetchDirItems(updatedCurrentDir);
-    window.history.pushState(
-      { currentDir: updatedCurrentDir },
-      'up',
-      updatedCurrentDir === '' ? '/' : `/../${updatedCurrentDir}`,
-    );
-
+    this.router.goUp(updatedCurrentDir);
     this.setState(() => (
       { currentDir: updatedCurrentDir, items: newItems.items.sort(compareItems) }));
   }
 
-  async handleHistoryChange(event) {
-    let currentDir;
-    if (event.state === null) currentDir = '';
-    else currentDir = event.state.currentDir;
+  async handleHistoryChange(updatedPath) {
+    const currentDir = updatedPath === undefined ? '' : updatedPath;
 
     const { currentDir: stateCurrentDir } = this.state;
     if (currentDir === stateCurrentDir) return;
