@@ -4,8 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: './src/index.js',
   output: {
-    publicPath: '/',
-    filename: 'main.js',
+    publicPath: '/static/',
+    filename: 'js/main.js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -49,6 +49,9 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
+            options: {
+              name: 'assets/[contenthash].[ext]',
+            },
           },
         ],
       },
