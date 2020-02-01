@@ -5,8 +5,9 @@ from flask.helpers import send_file
 def create_default_blueprint(static_folder, image_worker):
     bp = Blueprint('default', __name__, static_folder)
 
-    @bp.route('/')
-    def index():
+    @bp.route('/', defaults={'path': ''})
+    @bp.route('/<path:path>')
+    def index(path):
         return bp.send_static_file('index.html')
 
     @bp.route('/get-image/<path:image_relative_path>')
