@@ -3,7 +3,10 @@ import './Styles/item.sass';
 
 
 export default function Item(props) {
-  const { onClick, isFile, name } = props;
+  const {
+    onClick, isFile, name, index,
+  } = props;
+
   const fileSvg = (
     <svg width="45" height="41" viewBox="0 0 34 41" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -19,14 +22,18 @@ export default function Item(props) {
   );
   const folderSvg = (
     <svg width="45" height="41" viewBox="0 0 45 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 34V10V4C2 2.89543 2.89543 2 4 2H14.5C15.6046 2 16.5 2.89543 16.5 4V9C16.5 9.55228 16.9477 10 17.5 10H32H38C40.7614 10 43 12.2386 43 15V34C43 36.7614 40.7614 39 38 39H7C4.23858 39 2 36.7614 2 34Z" stroke="#FAFAFA" strokeWidth="3" />
+      <path
+        d="M2 34V10V4C2 2.89543 2.89543 2 4 2H14.5C15.6046 2 16.5 2.89543 16.5 4V9C16.5 9.55228 16.9477 10 17.5 10H32H38C40.7614 10 43 12.2386 43 15V34C43 36.7614 40.7614 39 38 39H7C4.23858 39 2 36.7614 2 34Z"
+        stroke="#FAFAFA"
+        strokeWidth="3"
+      />
     </svg>
   );
   const fileTypeIcon = isFile ? fileSvg : folderSvg;
   const boxClassName = `item ${isFile ? 'item-file-bg' : 'item-folder-bg'}`;
 
   return (
-    <div className={boxClassName} onClick={async () => onClick(name, isFile)}>
+    <div className={boxClassName} onClick={async () => onClick(name, index, isFile)}>
       <div className="item-file-type-box">
         {fileTypeIcon}
       </div>
