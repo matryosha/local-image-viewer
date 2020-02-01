@@ -58,6 +58,16 @@ export default class App extends React.Component {
       { currentDir: updatedCurrentDir, items: newItems.items.sort(compareItems) }));
   }
 
+  async handleFolderRootClicked() {
+    const { currentDir } = this.state;
+    if (currentDir === '') return;
+
+    const newItems = await this.apiService.fetchDirItems('');
+    this.router.goRoot();
+    this.setState(() => (
+      { currentDir: '', items: newItems.items.sort(compareItems) }));
+  }
+
   async handleHistoryChange(updatedPath) {
     const currentDir = updatedPath === undefined ? '' : updatedPath;
 
@@ -85,7 +95,7 @@ export default class App extends React.Component {
       <>
         <div id="control-buttons">
           <FolderUpButton onClick={async () => this.handleFolderUpClicked()} />
-          <RootButton />
+          <RootButton onClick={async () => this.handleFolderRootClicked()} />
         </div>
         <div id="items">
           {itemsToRender}
