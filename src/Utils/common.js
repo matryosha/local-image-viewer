@@ -25,14 +25,22 @@ function transformToRelImageUrl(item, currentDirString, getImageEndpoint) {
   return `${getImageEndpoint}/${currentDirString}/${item.name}`;
 }
 
-function createGalleryItemList(currentDirString, dirItems, apiService) {
+function createGalleryItemList(currentDirString, dirItems, itemIndex, apiService) {
   const { getImageEndpoint } = apiService;
-  const currentDirFilesOnly = dirItems.filter((i) => i.isFile);
+  const imagesItems = dirItems.filter((i) => i.isFile);
+  const dirItemsCount = dirItems.length - imagesItems.length;
 
-  const filesWithRelativeUrl = currentDirFilesOnly
+  // index of image in image only array. Used to specify what image need to be opened
+  const imageIndex = itemIndex - dirItemsCount;
+
+  const filesWithRelativeUrl = imagesItems
     .map((item) => transformToRelImageUrl(item, currentDirString, getImageEndpoint));
 
-  return filesWithRelativeUrl.map((f) => ({ src: f, w: -1, h: -1 }));
+  // w and h equal -1 to find image resolution later
+  return ({
+    urls: filesWithRelativeUrl.map((f) => ({ src: f, w: -1, h: -1 })),
+    imageIndex,
+  });
 }
 
 export {
