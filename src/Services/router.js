@@ -27,6 +27,13 @@ export default {
       path === '' ? '/' : `/../${path}`,
     );
   },
+  goRoot() {
+    window.history.pushState(
+      { path: '' },
+      '',
+      '/',
+    );
+  },
   getCurrentDirPath() {
     return pathNameToCurrentDirString(window.location.pathname);
   },
