@@ -18,6 +18,9 @@ export default class App extends React.Component {
     this.router.init();
     this.router.subscribeToHistoryChanges(this.handleHistoryChange.bind(this));
     this.state = { items: [], currentDir: this.router.getCurrentDirPath() };
+
+    this.itemClickedInternal = async (
+      itemName, itemIndex, isFile) => this.itemClicked(itemName, itemIndex, isFile);
   }
 
   async componentDidMount() {
@@ -26,15 +29,15 @@ export default class App extends React.Component {
     this.setState(() => ({ items: fetchResult.items.sort(compareItems) }));
   }
 
-  async itemClicked(itemName, isFile) {
-    if (isFile) return this.handleFileClicked(itemName);
+  async itemClicked(itemName, itemIndex, isFile) {
+    if (isFile) return this.handleFileClicked(itemIndex);
     return this.handleFolderClicked(itemName);
   }
 
-  async handleFileClicked(itemName) {
+  async handleFileClicked(itemIndex) {
     const { items, currentDir } = this.state;
-    const galleryItems = createGalleryItemList(currentDir, items, this.apiService);
-    this.galleryService.open(galleryItems);
+    const galleryItems = createGalleryItemList(currentDir, items, itemIndex, this.apiService);
+    this.galleryService.open(galleryItems.urls, galleryItems.imageIndex);
   }
 
   async handleFolderClicked(folderName) {
@@ -85,9 +88,10 @@ export default class App extends React.Component {
       <Item
         isFile={item.isFile}
         name={item.name}
+        index={index}
         // eslint-disable-next-line react/no-array-index-key
         key={index}
-        onClick={async (itemName, isFile) => this.itemClicked(itemName, isFile)}
+        onClick={this.itemClickedInternal}
       />
     ));
 
