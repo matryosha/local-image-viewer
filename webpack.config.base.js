@@ -62,13 +62,4 @@ module.exports = {
       template: 'src/index.html',
     }),
   ],
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: false,
-    port: 9000,
-    useLocalIp: true,
-    host: '0.0.0.0',
-    historyApiFallback: true,
-  },
-  devtool: 'cheap-module-source-map',
 };
