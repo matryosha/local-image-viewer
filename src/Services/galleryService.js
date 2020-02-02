@@ -20,7 +20,7 @@ export default () => ({
         img.onload = function () {
           item.w = this.width;
           item.h = this.height;
-          gallery.invalidateCurrItems();
+          item.needsUpdate = true; // only update the newly loaded item
           gallery.updateSize(true);
         };
         img.src = item.src;
