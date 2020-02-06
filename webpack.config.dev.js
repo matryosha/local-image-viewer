@@ -1,4 +1,5 @@
 const path = require('path');
+const ErrorOverlayPlugin = require('error-overlay-webpack-plugin')
 const merge = require('webpack-merge');
 
 const baseConf = require('./webpack.config.base');
@@ -20,4 +21,5 @@ module.exports = merge(baseConf, {
     },
   },
   devtool: 'cheap-module-source-map',
+  plugins: [new ErrorOverlayPlugin()],
 });
