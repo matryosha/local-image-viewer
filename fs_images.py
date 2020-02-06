@@ -6,7 +6,7 @@ def glob_search(path, patterns):
     result = []
 
     for pattern in patterns:
-        result.extend(glob.glob(path + pattern))
+        result.extend(glob.glob(glob.escape(path) + pattern))
 
     return result
 
