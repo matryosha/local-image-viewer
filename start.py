@@ -5,4 +5,4 @@ if __name__ == '__main__':
     image_worker = ImageWorker()
 
     web = web_instance.create_app(image_worker)
-    web.run(use_reloader=True)
+    web.run(use_reloader=True, host='0.0.0.0')
