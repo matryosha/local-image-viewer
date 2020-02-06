@@ -5,12 +5,19 @@ const baseConf = require('./webpack.config.base');
 
 module.exports = merge(baseConf, {
   devServer: {
+    publicPath: '/static/',
     contentBase: path.join(__dirname, 'dist'),
     compress: false,
     port: 9000,
     useLocalIp: true,
     host: '0.0.0.0',
-    historyApiFallback: true,
+    historyApiFallback: {
+      index: '/static/index.html',
+    },
+    overlay: {
+      warnings: false,
+      errors: true,
+    },
   },
   devtool: 'cheap-module-source-map',
 });
